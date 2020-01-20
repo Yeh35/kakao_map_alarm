@@ -1,9 +1,10 @@
 package com.example.kakaomapalarm
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import com.kakaomapalarm.views.MainActivity
 import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity : AppCompatActivity()
@@ -24,5 +25,9 @@ class IntroActivity : AppCompatActivity()
         img_mapIcon.setOnClickListener {
             img_mapIcon.startAnimation(icon_animation);
         }
+
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 }
