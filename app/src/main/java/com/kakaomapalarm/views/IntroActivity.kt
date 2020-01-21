@@ -41,7 +41,6 @@ class IntroActivity : AppCompatActivity()
 
         override fun run()
         {
-//            SystemClock.sleep(    3000)
 
             val db= AppDatabase.getInstance(parentActivity)
             if (db == null)
@@ -53,6 +52,8 @@ class IntroActivity : AppCompatActivity()
                 return
             }
 
+            SystemClock.sleep(1500)
+
             parentActivity.runOnUiThread(java.lang.Runnable {
                 val intent = Intent(parentActivity, MainActivity::class.java)
                 parentActivity.startActivity(intent)
@@ -60,5 +61,4 @@ class IntroActivity : AppCompatActivity()
             })
         }
     }
-
 }
