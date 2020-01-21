@@ -3,7 +3,12 @@ package com.example.kakaomapalarm
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.animation.AnimationUtils
+import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
+import androidx.room.Room
+import com.kakaomapalarm.db.AppDatabase
 import com.kakaomapalarm.views.MainActivity
 import kotlinx.android.synthetic.main.activity_intro.*
 
@@ -26,8 +31,34 @@ class IntroActivity : AppCompatActivity()
             img_mapIcon.startAnimation(icon_animation);
         }
 
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+        val introBackThread = IntroBackThread(this)
+        introBackThread.start()
     }
+
+    private class IntroBackThread(activity:IntroActivity) : Thread()
+    {
+        private val parentActivity:IntroActivity = activity
+
+        override fun run()
+        {
+//            SystemClock.sleep(    3000)
+
+            val db= AppDatabase.getInstance(parentActivity)
+            if (db == null)
+            {
+                parentActivity.runOnUiThread(java.lang.Runnable {
+                    parentActivity.finish()
+                })
+
+                return
+            }
+
+            parentActivity.runOnUiThread(java.lang.Runnable {
+                val intent = Intent(parentActivity, MainActivity::class.java)
+                parentActivity.startActivity(intent)
+                parentActivity.finish()
+            })
+        }
+    }
+
 }
