@@ -1,15 +1,12 @@
-package com.example.kakaomapalarm
+package com.kakaomapalarm.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.animation.AnimationUtils
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.room.Room
+import com.example.kakaomapalarm.R
 import com.kakaomapalarm.db.AppDatabase
-import com.kakaomapalarm.views.MainActivity
 import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity : AppCompatActivity()
@@ -43,8 +40,7 @@ class IntroActivity : AppCompatActivity()
         {
 
             val db= AppDatabase.getInstance(parentActivity)
-            if (db == null)
-            {
+            if (db == null) {
                 parentActivity.runOnUiThread(java.lang.Runnable {
                     parentActivity.finish()
                 })
@@ -52,7 +48,7 @@ class IntroActivity : AppCompatActivity()
                 return
             }
 
-            SystemClock.sleep(1500)
+            SystemClock.sleep(2000)
 
             parentActivity.runOnUiThread(java.lang.Runnable {
                 val intent = Intent(parentActivity, MainActivity::class.java)

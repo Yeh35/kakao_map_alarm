@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kakaomapalarm">
 
+    <uses-permission android:name="android.permission.INTERNET">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
+
+    <meta-data android:name="com.kakao.sdk.AppKey" android:value="eb2f20293be29a8742e773d02b75f7e8"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,15 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".IntroActivity">
+        <activity android:name="com.kakaomapalarm.views.AlarmImformation"></activity>
+        <activity android:name="com.kakaomapalarm.views.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlarmInformationActivity" />
-        <activity android:name="com.kakaomapalarm.views.MainActivity"></activity>
+        <activity android:name="com.kakaomapalarm.views.MainActivity" />
     </application>
 
 </manifest>

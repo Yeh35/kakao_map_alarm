@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="visible"
+    android:background="@color/default_background_color"
+    tools:context="com.kakaomapalarm.views.AlarmImformation">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:orientation="vertical">
+
+        <TimePicker
+            android:id="@+id/tp_time"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:amPmTextColor="@android:color/white"
+            android:timePickerMode="spinner" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/default_List_background_color"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal">
+
+            <ToggleButton
+                android:id="@+id/tg_sun"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@color/default_List_background_color"
+                android:onClick="onClickToggleButton"
+                android:textColor="@android:color/holo_red_dark"
+                android:textOff="일"
+                android:textOn="일" />
+
+            <ToggleButton
+                android:id="@+id/tg_mon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:background="@color/default_List_background_color"
+                android:onClick="onClickToggleButton"
+                android:textOff="월"
+                android:textOn="월" />
+
+            <ToggleButton
+                android:id="@+id/tg_tue"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="@color/default_List_background_color"
+                android:onClick="onClickToggleButton"
+                android:textOff="화"
+                android:textOn="화" />
+
+            <ToggleButton
+                android:id="@+id/tg_wed"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:background="@color/default_List_background_color"
+                android:onClick="onClickToggleButton"
+                android:textOff="수"
+                android:textOn="수" />
+
+            <ToggleButton
+                android:id="@+id/tg_thu"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:background="@color/default_List_background_color"
+                android:onClick="onClickToggleButton"
+                android:textOff="목"
+                android:textOn="목" />
+
+            <ToggleButton
+                android:id="@+id/tg_fri"
+                style="@style/Theme.AppCompat"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:background="@color/default_List_background_color"
+                android:onClick="onClickToggleButton"
+                android:textOff="금"
+                android:textOn="금" />
+
+            <ToggleButton
+                android:id="@+id/tg_sat"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="8dp"
+                android:background="@color/default_List_background_color"
+                android:onClick="onClickToggleButton"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textOff="토"
+                android:textOn="토" />
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:ems="10"
+            android:hint="알람 이름"
+            android:inputType="textPersonName" />
+
+        <Switch
+            android:id="@+id/switch1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:switchTextAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="진동"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClickKakaoMapOpen"
+            android:text="카카오맵 띄우기" />
+    </LinearLayout>
+</LinearLayout>
