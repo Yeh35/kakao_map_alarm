@@ -106,6 +106,8 @@ class MainActivity : AppCompatActivity()
             val Minute:Int = calender.get(Calendar.MINUTE)
             tv_time.text = if (hour >= 12) "오후 ${hour - 12}:${Minute}" else "오전 ${hour}:${Minute}"
 
+
+
             return view
         }
 
