@@ -25,7 +25,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="461dp"
+        android:layout_height="460dp"
         android:background="@color/default_List_background_color"
         android:orientation="vertical">
 
@@ -112,7 +112,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
@@ -123,7 +123,7 @@
             android:inputType="textPersonName" />
 
         <Switch
-            android:id="@+id/switch1"
+            android:id="@+id/sw_vibration"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="10dp"
@@ -133,14 +133,9 @@
             android:paddingRight="10dp"
             android:switchTextAppearance="@style/TextAppearance.AppCompat.Large"
             android:text="진동"
+            android:checked="true"
             android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="onClickKakaoMapOpen"
-            android:text="카카오맵 띄우기" />
     </LinearLayout>
 
     <LinearLayout
@@ -153,15 +148,17 @@
         <Button
             android:id="@+id/button2"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:onClick="onClickClose"
+            android:text="취소" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:onClick="onClickSave"
+            android:text="저장" />
     </LinearLayout>
 </LinearLayout>

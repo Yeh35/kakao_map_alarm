@@ -8,6 +8,7 @@ import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.kakaomapalarm.R
@@ -46,10 +47,20 @@ class MainActivity : AppCompatActivity()
                 list_alarm.invalidateViews()
             }
         }
+
+        list_alarm.onItemClickListener = AdapterView.OnItemClickListener() { parent, view, position, id ->
+            val itemData:MainListItemData = listAdapter.getItem(id.toInt())
+
+            val intent = Intent(this, AlarmImformation::class.java)
+            intent.putExtra("state", AlarmImformation.STATE_UPDATE)
+            intent.putExtra("id", itemData.id)
+            this.startActivity(intent)
+        }
     }
 
     fun OnClickListenerForAddButton(view: View) {
         val intent = Intent(this, AlarmImformation::class.java)
+        intent.putExtra("state", AlarmImformation.STATE_ADD)
         this.startActivity(intent)
     }
 

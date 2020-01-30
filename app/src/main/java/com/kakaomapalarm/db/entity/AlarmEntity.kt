@@ -1,5 +1,6 @@
 package com.kakaomapalarm.db.entity
 
+import android.text.Editable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
