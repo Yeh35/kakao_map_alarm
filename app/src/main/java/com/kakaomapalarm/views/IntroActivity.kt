@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.view.animation.AnimationUtils
 import com.example.kakaomapalarm.R
 import com.kakaomapalarm.db.AppDatabase
+import com.kakaomapalarm.utils.AlarmIntentManager
 import kotlinx.android.synthetic.main.activity_intro.*
 
 class IntroActivity : AppCompatActivity()
@@ -20,7 +21,6 @@ class IntroActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_intro)
 
-
         icon_animation.isFillEnabled = false;
         img_mapIcon.startAnimation(icon_animation);
 
@@ -30,6 +30,8 @@ class IntroActivity : AppCompatActivity()
 
         val introBackThread = IntroBackThread(this)
         introBackThread.start()
+
+        AlarmIntentManager.getInstance().setAlarmAll(this)
     }
 
     private class IntroBackThread(activity:IntroActivity) : Thread()

@@ -2,11 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.kakaomapalarm">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
-    <meta-data android:name="com.kakao.sdk.AppKey" android:value="eb2f20293be29a8742e773d02b75f7e8"/>
 
     <application
         android:allowBackup="true"
@@ -15,12 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name="com.kakaomapalarm.views.AlarmImformation"/>
-
+        <activity android:name="com.kakaomapalarm.views.AlarmActivity"></activity>
+        <activity android:name="com.kakaomapalarm.views.AlarmImformation" />
         <activity android:name="com.kakaomapalarm.views.IntroActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,17 +29,19 @@
             android:enabled="true"
             android:exported="false"
             android:label="STARTReceiver">
-
-            <intent-filter >
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver android:name="com.kakaomapalarm.receiver.AlarmReceiver">
             <intent-filter>
-                <action android:name="com.test.alarmtestous.ALARM_START"/>
+                <action android:name="com.test.alarmtestous.ALARM_START" />
             </intent-filter>
         </receiver>
+
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="eb2f20293be29a8742e773d02b75f7e8" />
     </application>
 
 </manifest>

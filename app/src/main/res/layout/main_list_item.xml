@@ -29,6 +29,7 @@
                 android:text="서울특별시 종로구 경복궁"
                 android:textColor="@android:color/black"
                 android:textSize="18sp"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_name" />
@@ -71,7 +72,8 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="월"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_tue"
@@ -81,7 +83,8 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="화"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_wed"
@@ -91,7 +94,8 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="수"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_thu"
@@ -101,7 +105,8 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="목"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_fri"
@@ -111,7 +116,8 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="금"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_sat"
@@ -121,7 +127,8 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="토"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_sun"
@@ -131,7 +138,8 @@
                     android:layout_weight="1"
                     android:enabled="false"
                     android:text="일"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TextView

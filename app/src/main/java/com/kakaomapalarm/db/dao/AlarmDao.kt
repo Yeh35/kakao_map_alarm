@@ -18,7 +18,4 @@ interface AlarmDao : BaseDao<AlarmEntity>
 
     @Query("DELETE FROM alarm WHERE id = :id")
     fun deleteById(id: Long): Int
-
-//    @Insert
-//    fun insertList(data: List<AlarmEntity>): Int
 }

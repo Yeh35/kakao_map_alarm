@@ -8,22 +8,24 @@ import android.animation.ObjectAnimator
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.os.Debug
 import android.view.View
 import android.widget.ToggleButton
 import com.example.kakaomapalarm.R
 import com.kakaomapalarm.db.AppDatabase
 import com.kakaomapalarm.db.entity.AlarmEntity
 import kotlinx.android.synthetic.main.activity_alarm_imformation.*
+import net.daum.mf.map.api.MapPoint
+import net.daum.mf.map.api.MapView
 import java.util.*
 import java.util.concurrent.Executors
-
 
 class AlarmImformation : AppCompatActivity() {
 
     companion object {
         const val STATE_ADD: Int = 1
         const val STATE_UPDATE: Int = 2
+        const val RESULT_CODE_SAVE = 1
+        const val RESULT_CODE_CANCEL = 0
     }
 
     var state: Int = 0
@@ -36,13 +38,13 @@ class AlarmImformation : AppCompatActivity() {
 
         this.state = intent.getIntExtra("state", 0)
 
-
         when (state) {
             STATE_ADD -> {
                 val calendar = Calendar.getInstance()
                 tp_time.hour = calendar.get(Calendar.HOUR_OF_DAY)
                 tp_time.minute = calendar.get(Calendar.MINUTE)
             }
+
             STATE_UPDATE -> {
                 this.id = intent.getLongExtra("id", 0)
                 val ioExecutor = Executors.newSingleThreadExecutor()
@@ -60,18 +62,38 @@ class AlarmImformation : AppCompatActivity() {
 
                         for (dayOfTheWeek: Char in alarm.day_of_the_week) {
                             when (dayOfTheWeek) {
-                                '일' -> tg_sun.isChecked = true
-                                '월' -> tg_mon.isChecked = true
-                                '화' -> tg_tue.isChecked = true
-                                '수' -> tg_wed.isChecked = true
-                                '목' -> tg_thu.isChecked = true
-                                '금' -> tg_fri.isChecked = true
-                                '토' -> tg_sat.isChecked = true
+                                '일' -> {
+                                    tg_sun.isChecked = true
+                                    onClickToggleButton(tg_sun)
+                                }
+                                '월' -> {
+                                    tg_mon.isChecked = true
+                                    onClickToggleButton(tg_mon)
+                                }
+                                '화' -> {
+                                    tg_tue.isChecked = true
+                                    onClickToggleButton(tg_tue)
+                                }
+                                '수' -> {
+                                    tg_wed.isChecked = true
+                                    onClickToggleButton(tg_wed)
+                                }
+                                '목' -> {
+                                    tg_thu.isChecked = true
+                                    onClickToggleButton(tg_thu)
+                                }
+                                '금' -> {
+                                    tg_fri.isChecked = true
+                                    onClickToggleButton(tg_fri)
+                                }
+                                '토' -> {
+                                    tg_sat.isChecked = true
+                                    onClickToggleButton(tg_sat)
+                                }
                             }
                         }
                     }
                 }
-
             }
             else -> this.finish()
         }
@@ -92,18 +114,11 @@ class AlarmImformation : AppCompatActivity() {
 
             toggle.background = getDrawable(R.color.default_List_background_color)
         }
-
-//        val colorFrom: Int =
-//        val colorTo: Int = android.R.color.holo_blue_bright
-//        animateToggle(view as ToggleButton, colorFrom, colorTo)
-    }
-
-    fun onClickKakaoMapOpen(view: View) {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("daummaps://open?page=placeSearch"))
-        startActivity(intent)
     }
 
     fun onClickClose(view: View) {
+
+        setResult(RESULT_CODE_CANCEL)
         this.finish()
     }
 
@@ -129,26 +144,22 @@ class AlarmImformation : AppCompatActivity() {
         val music = 0
         val isVibration = sw_vibration.isChecked
 
-        val defultData1 = AlarmEntity(this.id, calender.timeInMillis, dayOfTheWeek, name, location, x, y, isAlaram, music, isVibration)
+        val alarmEntity = AlarmEntity(this.id, calender.timeInMillis, dayOfTheWeek, name, location, x, y, isAlaram, music, isVibration)
 
         val ioExecutor = Executors.newSingleThreadExecutor()
         ioExecutor.execute {
             when (state) {
-                STATE_ADD -> AppDatabase.getInstance(this)!!.alarmDao().insert(defultData1)
-                STATE_UPDATE -> AppDatabase.getInstance(this)!!.alarmDao().update(defultData1)
+                STATE_ADD -> AppDatabase.getInstance(this)!!.alarmDao().insert(alarmEntity)
+                STATE_UPDATE -> AppDatabase.getInstance(this)!!.alarmDao().update(alarmEntity)
             }
 
             runOnUiThread {
+                val resultIntent: Intent = Intent()
+                resultIntent.putExtra("id", this.id)
+                setResult(RESULT_CODE_SAVE)
                 this.finish()
             }
         }
 
     }
-
-    private fun animateToggle(toggle: ToggleButton, colorFrom: Int,colorTo: Int) {
-        val colorAnim = ObjectAnimator.ofInt(toggle, "textColor", colorFrom, colorTo)
-        colorAnim.setEvaluator(ArgbEvaluator())
-        colorAnim.start()
-    }
-
 }
