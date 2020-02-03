@@ -13,6 +13,7 @@ import android.widget.ToggleButton
 import com.example.kakaomapalarm.R
 import com.kakaomapalarm.db.AppDatabase
 import com.kakaomapalarm.db.entity.AlarmEntity
+import com.kakaomapalarm.utils.AlarmIntentManager
 import kotlinx.android.synthetic.main.activity_alarm_imformation.*
 import net.daum.mf.map.api.MapPoint
 import net.daum.mf.map.api.MapView
@@ -137,6 +138,10 @@ class AlarmImformation : AppCompatActivity() {
         val calender = Calendar.getInstance()
         calender.set(0, 0, 0, tp_time.hour, tp_time.minute)
 
+        if (state == STATE_ADD) {
+            this.id
+        }
+
         val location = "서울시 종로구 경복궁"
         val x = "37.578937"
         val y = "126.976397"
@@ -149,9 +154,15 @@ class AlarmImformation : AppCompatActivity() {
         val ioExecutor = Executors.newSingleThreadExecutor()
         ioExecutor.execute {
             when (state) {
-                STATE_ADD -> AppDatabase.getInstance(this)!!.alarmDao().insert(alarmEntity)
-                STATE_UPDATE -> AppDatabase.getInstance(this)!!.alarmDao().update(alarmEntity)
+                STATE_ADD -> {
+                    this.id = AppDatabase.getInstance(this)!!.alarmDao().insert(alarmEntity)
+                }
+                STATE_UPDATE -> {
+                    AppDatabase.getInstance(this)!!.alarmDao().update(alarmEntity)
+                }
             }
+
+            AlarmIntentManager.getInstance().setAlarm(this, this.id)
 
             runOnUiThread {
                 val resultIntent: Intent = Intent()

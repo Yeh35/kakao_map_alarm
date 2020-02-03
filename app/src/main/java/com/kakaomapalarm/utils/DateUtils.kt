@@ -1,5 +1,6 @@
 package com.kakaomapalarm.utils
 
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DateUtils {
@@ -32,6 +33,22 @@ class DateUtils {
             val milliSeconds2 = (calendar.get(Calendar.HOUR_OF_DAY) as Long * 60 + calendar.get(Calendar.MINUTE)) * 60000
 
             return milliSeconds1 - milliSeconds2
+        }
+
+        fun formatKorDetail(date: Date): String {
+            var formatString: String = ""
+
+            val calender = Calendar.getInstance()
+            calender.time = date
+            val month:Int = calender.get(Calendar.MONTH) + 1
+            val day:Int = calender.get(Calendar.DAY_OF_MONTH)
+            formatString += "${month}월 ${day}일 "
+
+            val hour:Int = calender.get(Calendar.HOUR_OF_DAY)
+            val Minute:Int = calender.get(Calendar.MINUTE)
+            formatString += if (hour >= 12) "오후 ${hour - 12}:${Minute}" else "오전 ${hour}:${Minute}"
+
+            return formatString
         }
     }
 }

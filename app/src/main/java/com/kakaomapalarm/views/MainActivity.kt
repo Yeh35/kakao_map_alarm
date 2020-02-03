@@ -2,7 +2,6 @@ package com.kakaomapalarm.views
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
@@ -19,10 +18,7 @@ import com.kakaomapalarm.db.AppDatabase
 import com.kakaomapalarm.db.entity.AlarmEntity
 import com.kakaomapalarm.utils.DateUtils
 import com.kakaomapalarm.utils.MapUtils
-import kotlinx.android.synthetic.main.activity_alarm_imformation.*
 import kotlinx.android.synthetic.main.activity_main.*
-import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView
 import java.util.*
 import java.util.concurrent.Executors
 import kotlin.collections.ArrayList
@@ -85,7 +81,7 @@ class MainActivity : AppCompatActivity()
                     calender.time = Date(alarm.time)
                     alarmMinute = (calender.get(Calendar.HOUR_OF_DAY) * 60) + calender.get(Calendar.MINUTE)
 
-                    var intervalMinute: Int = 0;
+                    var intervalMinute: Int = 0
 
                     for (dayOfWeek: Char in alarm.day_of_the_week) {
                         var dayOfWeekIndex : Int =  DateUtils.getDayOfWeekIndex(dayOfWeek)
@@ -104,11 +100,14 @@ class MainActivity : AppCompatActivity()
                     }
                 }
 
+                Log.d("MainActivity", "nearIntervalMinute : ${nearIntervalMinute}")
+
                 val intervalHour: Int = nearIntervalMinute / 60
                 val intervalMinute: Int = nearIntervalMinute % 60
 
                 runOnUiThread {
                     tv_timeRemaining.text = "${intervalHour}시간 ${intervalMinute}분 후 출발"
+                    tv_now.text = DateUtils.formatKorDetail(Date())
                 }
 
                 // 1분 기다리고 1분 추가
