@@ -7,7 +7,7 @@ class AlarmUtils
 {
     companion object
     {
-        fun getNextAlarmTime(alarm: AlarmEntity): Date {
+        fun getNextAlarmTime (alarm: AlarmEntity): Date {
             val calendar: Calendar = Calendar.getInstance()
             calendar.time = Date()
             val nowHour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -27,13 +27,17 @@ class AlarmUtils
                 val dayOfWeekIndex = DateUtils.getDayOfWeekIndex(dayOfWeek)
 
                 // 이번주 현제 이후 알림 요일 인텍스 구하기 (현제 제외)
-                if (nowDayOfWeekIndex - dayOfWeekIndex > 0) {
+                if (dayOfWeekIndex == nowDayOfWeekIndex) {
+
+                    // 오늘이면 현제 시간보다 안지났으면된다.
+                    if (alarmCalculationTime > nowCalculationTime) {
+                        nextDayOfWeekIndex = dayOfWeekIndex
+                        break
+                    }
+                } else if (dayOfWeekIndex > nowDayOfWeekIndex) {
 
                     if (nextDayOfWeekIndex > dayOfWeekIndex) {
-
-                        if (nowCalculationTime < alarmCalculationTime) {
-                            nextDayOfWeekIndex = dayOfWeekIndex
-                        }
+                        nextDayOfWeekIndex = dayOfWeekIndex
                     }
                 }
 
@@ -56,6 +60,8 @@ class AlarmUtils
                 val addDate = nextDayOfWeekIndex - nowDayOfWeekIndex
                 calendar.add(Calendar.DATE, addDate)
             }
+
+            calendar.set(Calendar.SECOND, 0)
 
             return calendar.time
         }

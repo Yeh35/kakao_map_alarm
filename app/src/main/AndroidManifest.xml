@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.kakaomapalarm.views.AlarmActivity"></activity>
+        <activity android:name="com.kakaomapalarm.views.AlarmActivity"
+                  android:launchMode="singleTop" />
         <activity android:name="com.kakaomapalarm.views.AlarmImformation" />
         <activity android:name="com.kakaomapalarm.views.IntroActivity">
             <intent-filter>
@@ -35,7 +37,7 @@
         </receiver>
         <receiver android:name="com.kakaomapalarm.receiver.AlarmReceiver">
             <intent-filter>
-                <action android:name="com.test.alarmtestous.ALARM_START" />
+                <action android:name="com.kakaomapalarm.ALARM_START" />
             </intent-filter>
         </receiver>
 

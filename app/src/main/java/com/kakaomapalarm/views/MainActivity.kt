@@ -1,6 +1,7 @@
 package com.kakaomapalarm.views
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,10 +13,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.example.kakaomapalarm.R
 import com.kakaomapalarm.db.AppDatabase
 import com.kakaomapalarm.db.entity.AlarmEntity
+import com.kakaomapalarm.utils.AlarmUtils
 import com.kakaomapalarm.utils.DateUtils
 import com.kakaomapalarm.utils.MapUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,6 +59,33 @@ class MainActivity : AppCompatActivity()
             this.startActivityForResult(intent, START_ALARM_ACTIVITY_UPDATE_OPTION)
         }
 
+        list_alarm.onItemLongClickListener = AdapterView.OnItemLongClickListener { parent, view, position, id ->
+            val dialogBuilder = AlertDialog.Builder(this)
+            dialogBuilder.setTitle("삭제")
+            dialogBuilder.setMessage("해당 알람을 삭제할까요?")
+
+            //네 버튼
+            dialogBuilder.setPositiveButton("네", DialogInterface.OnClickListener { dialog, which ->
+                val itemData = listAdapter.getItem(id.toInt())
+
+                val ioExecutor = Executors.newSingleThreadExecutor()
+                ioExecutor.execute {
+                    db!!.alarmDao().deleteById(itemData.id)
+                }
+
+                this.refreshMainList()
+            })
+
+            dialogBuilder.setNegativeButton("아니요", DialogInterface.OnClickListener { dialog, which ->
+
+            })
+
+            val dialog = dialogBuilder.create()
+            dialog.show()
+
+            true
+        }
+
         this.refreshMainList()
     }
 
@@ -68,51 +98,41 @@ class MainActivity : AppCompatActivity()
             val calender = Calendar.getInstance()
             calender.time = Date()
 
-            var nowMinute: Int = (calender.get(Calendar.HOUR_OF_DAY) * 60) + calender.get(Calendar.MINUTE)
-            nowMinute += (calender.get(Calendar.DAY_OF_WEEK) * 24 * 60)
-
-            val alarmList:List<AlarmEntity> = db!!.alarmDao().selectAll()
-
             while (is_action) {
-                var nearIntervalMinute: Int = Int.MAX_VALUE
-                var alarmMinute: Int = 0
+                val alarmList:List<AlarmEntity> = db!!.alarmDao().selectAll()
+                var nextAlarmDate: Date = Date(Long.MAX_VALUE)
 
                 for (alarm in alarmList) {
-                    calender.time = Date(alarm.time)
-                    alarmMinute = (calender.get(Calendar.HOUR_OF_DAY) * 60) + calender.get(Calendar.MINUTE)
+                    val nextAlarmDateTemp = AlarmUtils.getNextAlarmTime(alarm)
+                    Log.d("MainActivity", "nextAlarmDateTemp: ${nextAlarmDateTemp}")
 
-                    var intervalMinute: Int = 0
-
-                    for (dayOfWeek: Char in alarm.day_of_the_week) {
-                        var dayOfWeekIndex : Int =  DateUtils.getDayOfWeekIndex(dayOfWeek)
-
-                        // 현제 시간과 약속시간의 간격 구하기
-                        intervalMinute = nowMinute - (alarmMinute + dayOfWeekIndex * 24 * 60)
-
-                        //마이너스면 이미 지나간 시간..
-                        if (intervalMinute < 0) {
-                            continue
-                        }
-
-                        if (nearIntervalMinute > intervalMinute) {
-                            nearIntervalMinute = intervalMinute
-                        }
+                    if (nextAlarmDate.time > nextAlarmDateTemp.time) {
+                        nextAlarmDate = nextAlarmDateTemp
                     }
                 }
 
-                Log.d("MainActivity", "nearIntervalMinute : ${nearIntervalMinute}")
+                val nextAlarmCalender: Calendar = Calendar.getInstance()
+                nextAlarmCalender.time = nextAlarmDate
 
-                val intervalHour: Int = nearIntervalMinute / 60
-                val intervalMinute: Int = nearIntervalMinute % 60
+                val intervalCalender: Calendar = Calendar.getInstance()
+                val intervalYear: Int = nextAlarmCalender.get(Calendar.YEAR) - intervalCalender.get(Calendar.YEAR)
+                val intervalDay: Int = nextAlarmCalender.get(Calendar.DAY_OF_YEAR) - intervalCalender.get(Calendar.DAY_OF_YEAR)
+                val intervalHour: Int = nextAlarmCalender.get(Calendar.HOUR_OF_DAY) - intervalCalender.get(Calendar.HOUR_OF_DAY)
+                val intervalMinute: Int = nextAlarmCalender.get(Calendar.MINUTE) - intervalCalender.get(Calendar.MINUTE)
 
                 runOnUiThread {
-                    tv_timeRemaining.text = "${intervalHour}시간 ${intervalMinute}분 후 출발"
+                    var hour = (intervalYear * 365 * 24) + (intervalDay * 24) + intervalHour
+                    var minute = intervalMinute
+                    if (minute < 0) {
+                        hour -= 1
+                        minute = 60 + intervalMinute
+                    }
+                    tv_timeRemaining.text = "${hour}시간 ${minute}분 후 출발"
                     tv_now.text = DateUtils.formatKorDetail(Date())
                 }
 
                 // 1분 기다리고 1분 추가
                 SystemClock.sleep(60000)
-                nowMinute += 1
             }
         }
     }
