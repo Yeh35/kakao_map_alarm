@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import com.kakaomapalarm.db.AppDatabase
 import com.kakaomapalarm.db.entity.AlarmEntity
 import com.kakaomapalarm.receiver.AlarmReceiver
@@ -37,15 +38,27 @@ class AlarmIntentManager {
                 calendar.time = alarmDate
 
 //                val alarmIntent = Intent("com.kakaomapalarm.ALARM_START")
-                val alarmIntent = Intent(context, AlarmReceiver::class.java)
 //                alarmIntent.setClass(context, AlarmReceiver::class.java)
+
+                val alarmIntent = Intent(context, AlarmReceiver::class.java)
                 alarmIntent.putExtra("id", alarm.id)
                 alarmIntent.putExtra("name", alarm.name)
 
                 val pendingIntent: PendingIntent = PendingIntent.getBroadcast(context, 1, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
 
                 val alarmManager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+//                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+
+                // 버전 따라 처리..
+                if (Build.VERSION.SDK_INT > 23) { // 23 이상
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent);
+                } else if (Build.VERSION.SDK_INT >= 19) { // 19 이상
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent);
+                } else {  // 19 미만
+                    // pass
+                    // 알람셋팅
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent);
+                }
             }
         }
     }
@@ -61,15 +74,26 @@ class AlarmIntentManager {
             calendar.time = alarmDate
 
 //            val alarmIntent = Intent("com.kakaomapalarm.ALARM_START")
-            val alarmIntent = Intent(context, AlarmReceiver::class.java)
 //            alarmIntent.setClass(context, AlarmReceiver::class.java)
+
+            val alarmIntent = Intent(context, AlarmReceiver::class.java)
             alarmIntent.putExtra("id", alarm.id)
             alarmIntent.putExtra("name", alarm.name)
 
             val pendingIntent: PendingIntent = PendingIntent.getBroadcast(context, 1, alarmIntent, PendingIntent.FLAG_CANCEL_CURRENT)
 
             val alarmManager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
+
+            // 버전 따라 처리..
+            if (Build.VERSION.SDK_INT > 23) { // 23 이상
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent);
+            } else if (Build.VERSION.SDK_INT >= 19) { // 19 이상
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent);
+            } else {  // 19 미만
+                // pass
+                // 알람셋팅
+                alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent);
+            }
         }
     }
 }

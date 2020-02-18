@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -43,7 +44,7 @@
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="eb2f20293be29a8742e773d02b75f7e8" />
+            android:value="XXXXXXXXXXXXXXXXXXXXXXXXXXxx" />
     </application>
 
 </manifest>

@@ -9,11 +9,13 @@ import android.os.SystemClock
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.view.View
-import com.example.kakaomapalarm.R
 import kotlinx.android.synthetic.main.activity_alarm.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
+import android.view.WindowManager
+import com.example.kakaomapalarm.R
+
 
 class AlarmActivity : AppCompatActivity() {
 
@@ -25,6 +27,11 @@ class AlarmActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
 
         val name = intent.getStringExtra("name")
         tv_name.text = name

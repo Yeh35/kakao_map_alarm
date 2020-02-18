@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.BaseAdapter
 import android.widget.TextView
@@ -43,7 +44,12 @@ class MainActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-            if (MapUtils.CheckLocationServiceState(this)) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+                or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                or WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED)
+
+        if (MapUtils.CheckLocationServiceState(this)) {
             MapUtils.CheckRunTimePermission(this)
         } else {
             MapUtils.ShowDialogForLocationServiceSetting(this)
